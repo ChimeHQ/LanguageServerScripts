@@ -11,7 +11,6 @@ function capture_environment() {
 	IFS=$'\n' ENV_ARRAY=( $ENV_OUTPUT )
 
 	for pair in ${ENV_ARRAY[@]}; do
-		echo "exporting: $pair"
 		export $pair
 	done
 }
