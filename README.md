@@ -45,7 +45,7 @@ Server scripts are named after the server, included in single a known location.
 
 ## Global Client List
 
-If you choose, your processes bundle id can be added to a global list. Clients can then automatically create symlinks within your `Application Scripts` directory, so that the common directory will be accessible to you from within the sandbox. 
+If you choose, your processes bundle id can be added to a global list. Clients can then automatically create a symlink within your `Application Scripts` directory to `com.chimehq.LanguageServerScripts` so that the common directory will be accessible to you from within the sandbox. 
 
 ```
 ~/Library/Application Scripts/com.chimehq.Edit
@@ -66,6 +66,44 @@ Bash is hard to use, but the API needs to be standardized. I thought it would be
 /Library/Application Support/com.chimehq.LanguageServerScripts/cli.sh
 ```
 
+This script:
+
+- parses flags
+- determines and excutes the supplied action
+- optionally captures the user's shell environment
+
+> [!WARNING]
+> Flags are parsed, but currently they have no effect.
+
+Here's an example of how to use this. Note that the `source` command must come after the functions are defined.
+
+```bash
+#!/bin/bash
+
+set -euo pipefail
+
+function version() {
+	echo "print a server-specific version string"
+}
+
+function install() {
+	echo "install the server"
+	echo "this should not do updates, to make the already-installed case fast"
+}
+
+function update() {
+	echo "update to the latest version of the server"
+}
+
+function run() {
+	echo "start and run the server"
+	echo "must use supplied environment variables"
+	echo "and an optional working directory"
+}
+
+source "$(dirname "$0")/cli.sh"
+```
+
 ## Versioning
 
 This scripts will change. How should clients know if they have the latest versions?
@@ -74,7 +112,7 @@ This scripts will change. How should clients know if they have the latest versio
 /Library/Application Support/com.chimehq.LanguageServerScripts/VERSIONS
 ```
 
-This file will contain a list of name/integer pairs corresponding to the versions of anything inside of this directory except for the VERSIONS file itself.
+This file will contain a sorted list of name/integer pairs corresponding to the versions of everything inside of this directory except for the VERSIONS file itself.
 
 ```
 cli.sh 12
