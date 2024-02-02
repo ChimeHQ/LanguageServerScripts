@@ -45,7 +45,7 @@ Server scripts are named after the server, included in single a known location.
 
 ## Global Client List
 
-If you choose, your processes bundle id can be added to a global list. Clients can then automatically create a symlink within your `Application Scripts` directory to `com.chimehq.LanguageServerScripts` so that the common directory will be accessible to you from within the sandbox. 
+If you choose, your process's bundle id can be added to a global list. Clients can then automatically create a symlink within your `Application Scripts` directory to `com.chimehq.LanguageServerScripts` so that the common directory will be accessible to you from within the sandbox. 
 
 ```
 ~/Library/Application Scripts/com.chimehq.Edit
