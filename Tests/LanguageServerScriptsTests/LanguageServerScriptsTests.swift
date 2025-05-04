@@ -1,12 +1,11 @@
-import XCTest
-@testable import LanguageServerScripts
+import Testing
 
-final class LanguageServerScriptsTests: XCTestCase {
-    func testExample() throws {
-        // XCTest Documentation
-        // https://developer.apple.com/documentation/xctest
+import LanguageServerScripts
 
-        // Defining Test Cases and Test Methods
-        // https://developer.apple.com/documentation/xctest/defining_test_cases_and_test_methods
+struct LanguageServerScriptsTests {
+    @Test func testGoPlsScript() throws {
+		let script = ScriptRepository.url(for: .gopls)
+		
+		#expect(script?.url.path().hasSuffix("com.chimehq.LanguageServerScripts/gopls.sh") == true)
     }
 }
