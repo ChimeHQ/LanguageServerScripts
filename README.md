@@ -10,7 +10,7 @@
 # LanguageServerScripts
 A collection of standardized scripts for managing [LSP][languageserverprotocol] language servers with a Swift API
 
-Installing, updating, and running language servers is tricky. It can be complex, and is almost always very server-specific. The idea here is to establish a standarized script API so applications can use the servers while sharing common infrastructure for managing them.
+Installing, updating, and running language servers is tricky. It can be complex, and is almost always very server-specific. The idea here is to establish a standarized system so applications can use the servers while sharing common infrastructure for managing them.
 
 This repo is also a Swift package that includes facilities for installation, should you be in control of a non-sandboxed app. Otherwise, the scripts themselves are available to be used directly for other installation mechanisms, including manual.
 
@@ -19,7 +19,7 @@ This repo is also a Swift package that includes facilities for installation, sho
 
 ## Sandboxing
 
-In general, language servers will not work when run inside a sandbox. A secondary benefit of standarized scripts is use with the [NSUserUnixTask](https://developer.apple.com/documentation/foundation/nsuserunixtask) API on macOS. This is a facility that allows out-of-sandbox process execution, which is perfect for this use. However, for this to work, the scripts need to be installed somehow, and that cannot be done by a sandboxed process.
+In general, language servers will not work when run inside a sandbox. However, the [NSUserUnixTask](https://developer.apple.com/documentation/foundation/nsuserunixtask) API on macOS allows out-of-sandbox process execution, which is perfect for this use. However, for this to work, the scripts need to be installed somehow, and that cannot be done by a sandboxed process.
 
 This repo also includes a **global** registry of applications that would like to participate in the shared script model. The idea is any one application will install the necessary components to **all** targets in the registry. This way, once a users machine is set up for one app, it will also be prepared for all.
 
@@ -41,7 +41,7 @@ Remember that this scripts are designed to be compatible with `NSUserUnixTask`. 
 ## Example
 
 ```sh
-# sh gopls.sh -e GOPATH=/Users/me/go -w /Project/Directory run
+sh gopls.sh -e GOPATH=/Users/me/go -w /Project/Directory run
 ```
 
 ## Common Directory
@@ -54,18 +54,7 @@ Server scripts are named after the server, included in single a known location.
 
 ## Global Client List
 
-If you choose, your process's bundle id can be added to a global list. Clients can then automatically create a symlink within your `Application Scripts` directory to `com.chimehq.LanguageServerScripts` so that the common directory will be accessible to you from within the sandbox. 
-
-```
-~/Library/Application Scripts/com.chimehq.Edit
-~/Library/Application Scripts/com.chimehq.Edit.Clojure
-~/Library/Application Scripts/com.chimehq.Edit.Elixir
-~/Library/Application Scripts/com.chimehq.Edit.Go
-~/Library/Application Scripts/com.chimehq.Edit.Python
-~/Library/Application Scripts/com.chimehq.Edit.Ruby
-~/Library/Application Scripts/com.chimehq.Edit.Rust
-~/Library/Application Scripts/com.chimehq.Edit.Swift
-```
+If you choose, your process's bundle id can be added to a global cooperative list. Clients can then automatically create a symlink within your `Application Scripts` directory to `com.chimehq.LanguageServerScripts` so that the common directory will be accessible to you from within the sandbox.
 
 ## Shared command line interface
 
@@ -92,22 +81,22 @@ Here's an example of how to use this. Note that the `source` command must come a
 set -euo pipefail
 
 function version() {
-	echo "print a server-specific version string"
+    echo "print a server-specific version string"
 }
 
 function install() {
-	echo "install the server"
-	echo "this should not do updates, to make the already-installed case fast"
+    echo "install the server"
+    echo "this should not do updates, to make the already-installed case fast"
 }
 
 function update() {
-	echo "update to the latest version of the server"
+    echo "update to the latest version of the server"
 }
 
 function run() {
-	echo "start and run the server"
-	echo "must use supplied environment variables"
-	echo "and an optional working directory"
+    echo "start and run the server"
+    echo "must use supplied environment variables"
+    echo "and an optional working directory"
 }
 
 source "$(dirname "$0")/cli.sh"
